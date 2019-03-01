@@ -3,6 +3,7 @@
 # Reader from a named pipe to which the writer.cpp writes
 ###############################################################################
 import os, sys, stat
+import time
 
 path= "/tmp/fifopipe"
 
@@ -27,6 +28,10 @@ while True:
         print ("Writer closed pipe")
         break
     cnt += 1
-    revstr=str[::-1]
-    print ("The {}th reversed String is: {}".format(cnt, revstr))
+    revstr = str
+    #revstr=str[::-1]
+
+    print ("The {}th String is: {}".format(cnt, revstr))
+    if cnt == 3:
+        time.sleep(7)
 

@@ -51,14 +51,22 @@ int main()
     sleep(2);
     writer w(fifo);
     /* write message to the FIFO */
-    std::string msg="This is the string to be reversed\n";
-    int i = 300;
-    while(--i)
+    int cnt = 0;
+    std::string msg="This is the string to be reversed ------------------------------------------------------------------------------------------------------------------------------\n";
+    while(1)
     {
-      if (w.write(msg) == -1)
+      const ::std::string m = msg + ::std::to_string(cnt);	    
+      if (w.write(m) == -1)
       {
         ::std::cout << "Failed to write: " << msg << ::std::endl;
       }
+      else
+      {
+        ::std::cerr << "Write succesfull " << cnt << "\n";  	    
+      }
+      cnt++;
+      usleep(5000);
     }
+
     return 0;
 }
