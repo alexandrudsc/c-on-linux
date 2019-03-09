@@ -13,12 +13,21 @@ atomic_bool run(true);
 
 void handle_sig(int signum)
 {
-  if (signum != SIGTERM)
+  if (signum == SIGTERM)
   {
-    return;
+    cout << "Signal caught\n";
+    run = false;
   }
-  cout << "Signal caught\n";
-  run = false;
+  else if (signum == SIGINT)
+  {
+    cout << "\nReally? (y/n) ";
+    char a = 'n';
+    cin >> a;
+    if (a == 'Y' || a == 'y')
+    {
+      run = false;
+    }
+  }
 }
 
 int main ()
@@ -32,6 +41,7 @@ int main ()
   sigemptyset(&act.sa_mask);
   act.sa_flags = 0;
   sigaction(SIGTERM, &act, nullptr);
+  sigaction(SIGINT, &act, nullptr);
   
   while(run)
   {
@@ -41,7 +51,6 @@ int main ()
     if (a == char_traits<char>::eof())
     {
       cout << "EOF on stdin\n";
-      break;
     }
     cout << "\n";
     if (a == 'X')
